@@ -16,13 +16,8 @@ local function SendNotification(title, text, duration)
         Duration = duration or 2,
     })
 end
-local unsupport {
-  "Evon",
-  "Evon Android",
-}
 
---unsupported
-if executor == unsupport then
+if executor == "Evon" or "Evon Android" then
   SendNotification("Unsupported", "Executor: " .. executor, 2)
   task.wait(2)
   lplr:Destroy()
