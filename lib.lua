@@ -17,8 +17,8 @@ local function SendNotification(title, text, duration)
     })
 end
 local unsupport {
-  "Evon"
-  "Evon Android"
+  "Evon",
+  "Evon Android",
 }
 
 --unsupported
