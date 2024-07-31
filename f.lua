@@ -243,12 +243,23 @@ local function login(key)
 	key = HttpService:UrlEncode(key)
 	local response = game:HttpGet("https://guerric.pythonanywhere.com/login?uid="..(tostring(LocalPlayer.UserId)) .. "&key=" .. key)
 	if response == "REFUSED" then
+		_G.CHATBOTHUB_KEY = key
+		if writeFileAvailable() then
+			print("New key saved")
+			writefile("chatbothub_key.cb", key)
+		end
+		_G.CHATBOTHUB_CREDITS = tonumber(game:HttpGet("https://guerric.pythonanywhere.com/credits?uid="..LocalPlayer.UserId))
+		local premium = tonumber(game:HttpGet("https://guerric.pythonanywhere.com/premium?uid="..LocalPlayer.UserId.."&key=".._G.CHATBOTHUB_KEY))
+		if premium == 1 then _G.CHATBOTHUB_PREMIUM = true else _G.CHATBOTHUB_PREMIUM = false end
+		updateCredits()
+		updatePremium()
 		OrionLib:MakeNotification{
-			Name = "Error",
-			Content = "Key successfully given",
-			Image = "rbxassetid://16661795528",
+			Name = "Logged in",
+			Content = "You successfully logged in!\nYou have ".._G.CHATBOTHUB_CREDITS.." points.",
+			Image = "rbxassetid://7115671043",
 			Time = 3
 		}
+		_G.CHATBOTHUB_LOGIN = true
 		return true
 	end
 	if response == "ACCEPTED" then
