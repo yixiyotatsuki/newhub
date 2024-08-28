@@ -44,7 +44,7 @@ local HintOfSpam = Instance.new("TextButton")
 --Properties:
 
 GUUI.Name = "GUUI"
-GUUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+GUUI.Parent = game.Players.Jacobthecool292:FindFirstChild("PlayerGui")
 GUUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 GUUI.ResetOnSpawn = false
 
