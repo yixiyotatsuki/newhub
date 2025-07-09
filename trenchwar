@@ -231,7 +231,7 @@ tabs.Combat:AddToggle("",{
     Callback=function(toggle)
         clickkill=toggle
         while clickkill do
-            if not Player.Backpack:FindFirstChild('newhub (clickkill)') then
+            if not funclib:GetTool("newhub (clickkill)") then
                 local tool=Instance.new("Tool")
                 tool.RequiresHandle=false
                 tool.CanBeDropped=false
