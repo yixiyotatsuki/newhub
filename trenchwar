@@ -225,7 +225,7 @@ tabs.Combat:AddToggle("",{
     end
 })
 local clickkill=false
-tabs.Combat:AddButton("",{
+tabs.Combat:AddToggle("",{
     Title="ClickKill",
     Default=false,
     Callback=function(toggle)
