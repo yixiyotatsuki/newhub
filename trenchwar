@@ -1,0 +1,244 @@
+local Fluent=loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local funclib=loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/stuff/main/funclib.lua"))()
+local Players=game:GetService("Players")
+local ReplicatedStorage=game:GetService("ReplicatedStorage")
+local RunService=game:GetService("RunService")
+local RS=RunService.RenderStepped
+local Player=Players.LocalPlayer
+local Character:Model=Player.Character
+local HumanoidRootPart:BasePart=Character:WaitForChild("HumanoidRootPart")
+Player.CharacterAdded:Connect(function(character)
+    Character=character
+    HumanoidRootPart=Character:WaitForChild("HumanoidRootPart")
+end)
+local funcs={}
+
+
+function funcs:Respawn(goback)
+    local args = {
+	    "Spawn",
+	    {
+		    [2] = HumanoidRootPart.Position
+	    }
+    }
+    if goback then
+        local lastCFrame=HumanoidRootPart:GetPivot()
+        funcs:Respawn()
+        task.wait(funclib:GetPing())
+        local time=funclib:Stopwatch()
+        repeat
+            HumanoidRootPart:PivotTo(lastCFrame)
+            HumanoidRootPart.AssemblyLinearVelocity=Vector3.zero
+            task.wait()
+        until time()>=.1
+        return
+    end
+    funclib:fireRemote(ReplicatedStorage:WaitForChild("Event"),args)
+end
+
+function funcs:Shoot(plr,dmg,magn,pos)
+    local gun=funclib:GetTool("Pistol")
+    if gun==nil then return end
+    local args={
+        plr.Character:WaitForChild("Humanoid"),
+        dmg,
+        {
+            magn or 10,
+            pos or plr.Character:GetPivot()
+        }
+    }
+    funclib:fireRemote(gun:WaitForChild("RemoteEvent"),args)
+end
+
+function funcs:GetOtherTeam()
+    local team=Player.Team
+    local otherteam=nil
+    if team.Name=="Axis" then
+        otherteam=game:GetService("Teams").Allies
+   elseif team.Name=="Allies" then
+        otherteam=game:GetService("Teams").Axis
+    end
+    return otherteam
+end
+
+local Window=Fluent:CreateWindow({
+    Title="Trench War | newhubv2",
+    SubTitle="by @.zamnsuki on discord",
+    TabWidth=160,
+    Size=UDim2.fromOffset(540,480),
+    Acrylic=false,
+    Theme="Darker",
+    MinimizeKey=Enum.KeyCode.RightControl
+})
+
+local tabs={
+    Home=Window:AddTab({Title="Home",Icon="home"}),
+    Defense=Window:AddTab({Title="Defense",Icon="shield"}),
+    Combat=Window:AddTab({Title="Fun",Icon="electricity"}),
+}
+
+tabs.Home:AddParagraph({
+    Title="Hello "..Player.Name,
+    Content="discord.gg/NEWHUBv2"
+})
+tabs.Home:AddButton({
+    Title="Execute IY",
+    Default=false,
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/edgeiy/infiniteyield/master/source"))()
+    end
+})
+
+local Movement=tabs.Defense:AddSection("Movement")
+local ws,jp=16,50
+local speedtoggle=false
+Movement:AddInput("",{
+    Title="Speed",
+    Default=16,
+    Placeholder="insert number",
+    Numeric=true,
+    Finished=false,
+    Callback=function(value)
+        ws=value
+    end
+})
+Movement:AddInput("",{
+    Title="Jump Power",
+    Default=50,
+    Placeholder="insert number",
+    Numeric=true,
+    Finished=false,
+    Callback=function(value)
+        jp=value
+    end
+})
+RunService.Heartbeat:Connect(function()
+    Character:WaitForChild("Humanoid").WalkSpeed=ws
+    Character:WaitForChild("Humanoid").JumpPower=jp
+end)
+local invisfly=false
+Movement:AddToggle("",{
+    Title="Invisible Fly",
+    Default=false,
+    Callback=function(toggle)
+        invisfly=toggle
+        local lastCFrame=HumanoidRootPart:GetPivot()
+        HumanoidRootPart:PivotTo(CFrame.new(0,100000,0))
+        task.wait(.1)
+        HumanoidRootPart.Anchored=true
+        task.wait(.1)
+        HumanoidRootPart:PivotTo(lastCFrame)
+        while invisfly do
+            local movedir=Character:WaitForChild("Humanoid").MoveDirection -- iy cfly rewrite, credit = peyton#9148 (apeyton)
+            local cf=HumanoidRootPart.CFrame
+            local camcf=workspace.CurrentCamera.CFrame
+            local camoff=cf:ToObjectSpace(camcf)
+            camcf=camcf*CFrame.new(-camoff.X,-camoff.Y,-camoff.Z+1)
+            local campos=camcf.Position
+            local cfpos=cf.Position
+            local osv=CFrame.new(campos,Vector3.new(cfpos.X,campos.Y,cfpos.Z)):VectorToObjectSpace(movedir)
+            Character:WaitForChild("Humanoid").PlatformStand=true
+            HumanoidRootPart:PivotTo(CFrame.new(cfpos)*(camcf-campos)*CFrame.new(osv))
+            task.wait()
+        end
+        local cf=HumanoidRootPart.CFrame
+        HumanoidRootPart.Anchored=false
+        local time=funclib:Stopwatch()
+        repeat
+            HumanoidRootPart.CFrame=cf
+            Character:WaitForChild("Humanoid"):ChangeState(Enum.HumanoidStateType.Running)
+            HumanoidRootPart.AssemblyLinearVelocity=Vector3.zero
+            task.wait()
+        until time()>=.05
+    end
+})
+local AutoRespawn=false
+local AutoRespawnConnection:RBXScriptConnection=nil
+tabs.Defense:AddToggle("",{
+    Title="Auto-Respawn",
+    Description="turn on while you have the military outfit",
+    Default=false,
+    Callback=function(toggle)
+        AutoRespawn=toggle
+        local function loop()
+            if not AutoRespawn then return end
+
+            AutoRespawnConnection=Character:WaitForChild("Humanoid").Died:Connect(function()
+                funcs:Respawn(true)
+                AutoRespawnConnection:Disconnect()
+                loop()
+            end)
+        end
+
+        loop()
+    end
+})
+
+tabs.Combat:AddInput("",{
+    Title="Kill",
+    Default="",
+    Placeholder="insert number",
+    Numeric=false,
+    Finished=true,
+    Callback=function(value)
+        local player=funclib:GetPlayer(value,true)
+        if player==nil then
+                return Fluent:Notify({Title="Kill",Content="the player doesn't exist"})
+        end
+        funcs:Shoot(player,100)
+    end -- 200 mark
+})
+
+local makeOtherTeamOneshot=false
+tabs.Combat:AddToggle("",{ -- ts is so evilsdd
+    Title="Make others oneshot",
+    Default=false,
+    Callback=function(toggle)
+        makeOtherTeamOneshot=toggle
+        while makeOtherTeamOneshot do
+            for _,v in pairs(Players:GetPlayers()) do
+                if v.Team==funcs:GetOtherTeam() then
+                    if v.Character~=nil then funcs:Shoot(v,v.Character:WaitForChild("Humanoid").Health-1) end
+                end
+            end
+            task.wait(1)
+        end
+    end
+})
+local clapaudios={"123595993967299","114534411216563","84356357497739","109472834309694","130957157393150","114241364911627","136253157287618","84656725012802"}
+local ComingOut=false
+tabs.Combat:AddToggle("",{
+    Title="pistol dingaling",
+    Description="18+",
+    Default=false,
+    Callback=function(toggle)
+        ComingOut=toggle
+        while ComingOut do
+            local pistol=funclib:GetTool("Pistol")
+            if pistol then
+                pistol.Grip=CFrame.new(.5,.5,-1.5)*CFrame.Angles(math.rad(90),0,math.rad(-95))
+                pistol.Handle.FireSound.SoundId="rbxassetid://"..clapaudios[math.random(1,8)]
+                pistol.Handle.FireSound.Volume=6
+            end
+            task.wait(1)
+        end
+    end
+})
+tabs.Combat:AddButton({
+    Title="ClickKill",
+    Default=false,
+    Callback=function()
+        local tool=Instance.new("Tool")
+        tool.RequiresHandle=false
+        tool.CanBeDropped=false
+        tool.Name="Click Kill (@.zamnsuki)"
+        tool.Activated:Connect(function()
+            local mouse=Player:GetMouse()
+            if mouse.Target~=nil and mouse.Target.Parent:FindFirstChild("Humanoid") then
+                funcs:Shoot(Players:FindFirstChild(mouse.Target.Parent.Name),100)
+            end
+        end)
+        tool.Parent=Player.Backpack
+    end
+})
+print("tatsuki was here (@.zamnsuki on discord)")
