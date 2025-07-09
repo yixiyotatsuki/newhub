@@ -62,7 +62,7 @@ function funcs:GetOtherTeam()
 end
 
 local Window=Fluent:CreateWindow({
-    Title="Trench War | newhubv2",
+    Title="Trench War | newhub",
     SubTitle="by @.zamnsuki on discord",
     TabWidth=160,
     Size=UDim2.fromOffset(540,480),
@@ -224,21 +224,28 @@ tabs.Combat:AddToggle("",{
         end
     end
 })
-tabs.Combat:AddButton({
+local clickkill=false
+tabs.Combat:AddButton("",{
     Title="ClickKill",
     Default=false,
-    Callback=function()
-        local tool=Instance.new("Tool")
-        tool.RequiresHandle=false
-        tool.CanBeDropped=false
-        tool.Name="Click Kill (@.zamnsuki)"
-        tool.Activated:Connect(function()
-            local mouse=Player:GetMouse()
-            if mouse.Target~=nil and mouse.Target.Parent:FindFirstChild("Humanoid") then
-                funcs:Shoot(Players:FindFirstChild(mouse.Target.Parent.Name),100)
+    Callback=function(toggle)
+        clickkill=toggle
+        while clickkill do
+            if not Player.Backpack:FindFirstChild('newhub (clickkill)') then
+                local tool=Instance.new("Tool")
+                tool.RequiresHandle=false
+                tool.CanBeDropped=false
+                tool.Name="newhub (clickkill)"
+                tool.Activated:Connect(function()
+                    local mouse=Player:GetMouse()
+                    if mouse.Target~=nil and mouse.Target.Parent:FindFirstChild("Humanoid") then
+                        funcs:Shoot(Players:FindFirstChild(mouse.Target.Parent.Name),100)
+                    end
+                end)
+                tool.Parent=Player.Backpack
             end
-        end)
-        tool.Parent=Player.Backpack
+            task.wait()
+        end
     end
 })
 print("tatsuki was here (@.zamnsuki on discord)")
