@@ -42,7 +42,7 @@ end)
 
 TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
     if msg.TextSource then
-        if msg.TextSource.Type==Enum.TextChatMessageType.Whisper and msg.TextSource.UserId==Owner.UserId then
+        if msg.TextChannel.Name=="RBXWhisper" and msg.TextSource.UserId==Owner.UserId then
             local msg=msg.Text
             local args=msg:sub(2,#msg):split(" ")
             local cmd=args[1]
