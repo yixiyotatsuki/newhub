@@ -24,7 +24,7 @@ HB:Connect(function(deltaTime)
     Character:TranslateBy(Vector3.new(0,1e6,0)-Character:GetPivot().Position)
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
-    sword.Size=Vector3.new(20,20,20)
+    sword.Handle.Size=Vector3.new(20,20,20)
     Character:WaitForChild("Humanoid"):EquipTool(sword)
     sword:Activate()
     for i,v in pairs(looplist) do
