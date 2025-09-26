@@ -1,4 +1,3 @@
--- i made this a github page because delta is so fucking annoying
 -- no ui lib this time
 
 local funclib=loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/stuff/main/funclib.lua"))()
@@ -42,8 +41,11 @@ HB:Connect(function(deltaTime)
 end)
 
 TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
+    print("This worked")
     if msg.TextSource then
+        print("Hi")
         if msg.TextChannel.Name=="RBXWhisper" and msg.TextSource.UserId==Owner.UserId then
+            print("he")
             local msg=msg.Text
             local args=msg:sub(2,#msg):split(" ")
             local cmd=args[1]
