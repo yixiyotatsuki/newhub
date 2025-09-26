@@ -40,7 +40,7 @@ HB:Connect(function(deltaTime)
     end
 end)
 
-TextChatService.OnIncomingMessage:Connect(function(msg:TextChatMessage)
+TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
     if msg.TextSource then
         if msg.TextSource.Type==Enum.TextChatMessageType.Whisper and msg.TextSource.UserId==Owner.UserId then
             local msg=msg.Text
@@ -68,4 +68,4 @@ TextChatService.OnIncomingMessage:Connect(function(msg:TextChatMessage)
             end
         end
     end
-end)
+end
