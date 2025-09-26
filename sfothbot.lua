@@ -21,7 +21,7 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
 end
 local looplist={}
 HB:Connect(function(deltaTime)
-    Character:TranslateBy(Vector3.new(0,1e6,0)-Character:GetPivot().Position)
+    Character:PivotTo(CFrame.new(0,1e6,0))
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
@@ -49,7 +49,7 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                         v.Character:BreakJoints()
                         while v.Character:WaitForChild("Humanoid").Health>1 do
                             if v.Character:WaitForChild("Sword",delta) then v.Character:WaitForChild("Sword",delta):Destroy() end
-                            v.Character:PivotTo(CFrame.new(funcs:GetSword().Handle.Position,v.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
+                            v.Character:PivotTo(CFrame.new(funcs:GetSword().Handle.Position,v.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
                         end
                     end)
                 elseif cmd=="loop" then
