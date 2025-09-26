@@ -26,6 +26,7 @@ HB:Connect(function(deltaTime)
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
+    sword.Handle.Massless=true
     Character:WaitForChild("Humanoid"):EquipTool(sword)
     sword:Activate()
     for i,v in pairs(looplist) do
