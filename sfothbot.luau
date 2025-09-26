@@ -41,25 +41,20 @@ HB:Connect(function(deltaTime)
 end)
 
 TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
-    print("This worked")
     if msg.TextSource then
-        print("Hi")
         if string.match(msg.TextChannel.Name,"RBXWhisper") and msg.TextSource.UserId==Owner.UserId then
-            print("he")
             local msg=msg.Text
             local args=msg:sub(2,#msg):split(" ")
             local cmd=args[1]
             table.remove(args,1)
             if msg:sub(1,1)==";" then
-                print('received command')
                 if cmd=="kill" then
-                    print("hello")
                     local delta=task.wait()
                     local v=funclib:GetPlayer(args[1],false)
                     task.spawn(function()
                         v.Character:BreakJoints()
                         while v.Character:WaitForChild("Humanoid").Health>1 do
-                            if v.Character:waitforchild("Sword",delta) then v.Character:WaitForChild("Sword",delta):Destroy() end
+                            if v.Character:WaitForChild("Sword",delta) then v.Character:WaitForChild("Sword",delta):Destroy() end
                             for _,v in pairs(v.Character:GetChildren()) do
                                 if v:IsA("BasePart") then
                                     v.CFrame=CFrame.new(funcs:GetSword().Handle.Position,v.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
