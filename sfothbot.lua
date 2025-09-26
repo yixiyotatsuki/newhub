@@ -14,9 +14,6 @@ Player.CharacterAdded:Connect(function(character)
     HumanoidRootPart=Character:WaitForChild("HumanoidRootPart",9e9)
 end)
 local funcs={}
-Players.PlayerRemoving:Connect(function(player)
-    if player==Owner then game:Shutdown() end
-end)
 function funcs:GetSword() -- this is quite literally just a function from funclib but i replaced it with waitforchild
     local object=Player:WaitForChild("Backpack"):WaitForChild("Sword",.01)
     if object==nil and Player.Character~=nil then object=game:GetService("Players").LocalPlayer.Character:WaitForChild("Sword",.01) end
@@ -31,11 +28,10 @@ HB:Connect(function(deltaTime)
     sword:Activate()
     for i,v in pairs(looplist) do
         if not v.Character then continue end 
-        v.Character:BreakJoints()
         if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
         for i,b in pairs(v.Character:GetChildren()) do
             if b:IsA("BasePart") then
-                b.CFrame=CFrame.new(sword.Handle.Position,b.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
+                b.CFrame=CFrame.new(sword.Handle.Position,b.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5))
             end
         end
     end
@@ -58,7 +54,7 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                             if v.Character:WaitForChild("Sword",delta) then v.Character:WaitForChild("Sword",delta):Destroy() end
                             for _,v in pairs(v.Character:GetChildren()) do
                                 if v:IsA("BasePart") then
-                                    v.CFrame=CFrame.new(funcs:GetSword().Handle.Position,v.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
+                                    v.CFrame=CFrame.new(funcs:GetSword().Handle.Position,v.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5))
                                 end
                             end 
                         end
