@@ -30,11 +30,12 @@ HB:Connect(function(deltaTime)
     Character:WaitForChild("Humanoid"):EquipTool(sword)
     sword:Activate()
     for i,v in pairs(looplist) do
+        if not v.Character then continue end 
         v.Character:BreakJoints()
         if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
-        for i,v in pairs(v.Character:GetChildren()) do
-            if v:IsA("BasePart") then
-                v.CFrame=CFrame.new(sword.Handle.Position,v.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
+        for i,b in pairs(v.Character:GetChildren()) do
+            if b:IsA("BasePart") then
+                b.CFrame=CFrame.new(sword.Handle.Position,v.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
             end
         end
     end
@@ -64,6 +65,10 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                     end)
                 elseif cmd=="loop" then
                     table.insert(looplist,Players:FindFirstChild(args[1]))
+                elseif cmd=="unloop" then
+                    local index=0
+                    for i,v in ipairs(looplist) do if v.Name==args[1] then index=i break end end
+                    table.remove(looplist,index)
                 end
             end
         end
