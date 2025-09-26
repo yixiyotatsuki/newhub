@@ -24,16 +24,13 @@ HB:Connect(function(deltaTime)
     Character:TranslateBy(Vector3.new(0,1e6,0)-Character:GetPivot().Position)
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
+    sword.Size=Vector3.new(20,20,20)
     Character:WaitForChild("Humanoid"):EquipTool(sword)
     sword:Activate()
     for i,v in pairs(looplist) do
         if not v.Character then continue end 
         if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
-        for i,b in pairs(v.Character:GetChildren()) do
-            if b:IsA("BasePart") then
-                b.CFrame=CFrame.new(sword.Handle.Position,b.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5))
-            end
-        end
+        v.Character:PivotTo(CFrame.new(sword.Handle.Position,v.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
     end
 end)
 
@@ -52,11 +49,7 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                         v.Character:BreakJoints()
                         while v.Character:WaitForChild("Humanoid").Health>1 do
                             if v.Character:WaitForChild("Sword",delta) then v.Character:WaitForChild("Sword",delta):Destroy() end
-                            for _,v in pairs(v.Character:GetChildren()) do
-                                if v:IsA("BasePart") then
-                                    v.CFrame=CFrame.new(funcs:GetSword().Handle.Position,v.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5))
-                                end
-                            end 
+                            v.Character:PivotTo(CFrame.new(funcs:GetSword().Handle.Position,v.Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
                         end
                     end)
                 elseif cmd=="loop" then
