@@ -26,6 +26,7 @@ end
 local looplist={}
 HB:Connect(function(deltaTime)
     Character:TranslateBy(Vector3.new(0,1e6,0)-Character:GetPivot().Position)
+    HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     Character:WaitForChild("Humanoid"):EquipTool(sword)
     sword:Activate()
@@ -48,7 +49,9 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
             local cmd=args[1]
             table.remove(args,1)
             if msg:sub(1,1)==";" then
+                print('received command')
                 if cmd=="kill" then
+                    print("hello")
                     local delta=task.wait()
                     local v=funclib:GetPlayer(args[1],false)
                     task.spawn(function()
