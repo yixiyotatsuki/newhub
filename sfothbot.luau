@@ -1,8 +1,6 @@
 -- i made this a github page because delta is so fucking annoying
 -- no ui lib this time
 
--- no ui lib this time
-
 local funclib=loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/stuff/main/funclib.lua"))()
 local Players=game:GetService("Players")
 local Owner=Players:FindFirstChild("Jacobthecool292")
@@ -42,7 +40,7 @@ HB:Connect(function(deltaTime)
     end
 end)
 
-TextChatService.Subscribe:Connect(function(msg:TextChatMessage)
+TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
     if msg.TextSource then
         if msg.TextSource.Type==Enum.TextChatMessageType.Whisper and msg.TextSource.UserId==Owner.UserId then
             local msg=msg.Text
@@ -70,4 +68,4 @@ TextChatService.Subscribe:Connect(function(msg:TextChatMessage)
             end
         end
     end
-end)
+end
