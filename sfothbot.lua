@@ -35,7 +35,7 @@ HB:Connect(function(deltaTime)
         if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
         for i,b in pairs(v.Character:GetChildren()) do
             if b:IsA("BasePart") then
-                b.CFrame=CFrame.new(sword.Handle.Position,v.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
+                b.CFrame=CFrame.new(sword.Handle.Position,b.Position+Vector3.new(math.random(-1,1)*5,math.random(-1,1)*5,math.random(-1,1)*5))
             end
         end
     end
