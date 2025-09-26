@@ -44,7 +44,7 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
     print("This worked")
     if msg.TextSource then
         print("Hi")
-        if msg.TextChannel.Name=="RBXWhisper" and msg.TextSource.UserId==Owner.UserId then
+        if string.match(msg.TextChannel.Name,"RBXWhisper") and msg.TextSource.UserId==Owner.UserId then
             print("he")
             local msg=msg.Text
             local args=msg:sub(2,#msg):split(" ")
