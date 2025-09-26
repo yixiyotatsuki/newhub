@@ -10,6 +10,7 @@ local Player=Players.LocalPlayer
 local Character:Model=Player.Character
 local HumanoidRootPart:BasePart=Character:WaitForChild("HumanoidRootPart",9e9)
 Player.CharacterAdded:Connect(function(character)
+    workspace.FallenPartsDestroyHeight=0/0
     Character=character
     HumanoidRootPart=Character:WaitForChild("HumanoidRootPart",9e9)
 end)
@@ -21,7 +22,7 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
 end
 local looplist={}
 HB:Connect(function(deltaTime)
-    Character:PivotTo(CFrame.new(0,1e6,0))
+    Character:PivotTo(CFrame.new(0,-65536,0))
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
