@@ -20,6 +20,7 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
     if object==nil and Player.Character~=nil then object=game:GetService("Players").LocalPlayer.Character:WaitForChild("Sword",.01) end
     return object
 end
+local flinging=false
 function fling(VeryCoolVariableName)
 	local layer_iaccidentallymispelledplayerbutidontcare=VeryCoolVariableName
 	local hrp,iusuallydontneedavariableforthisbutitsok=layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("HumanoidRootPart"),layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("Humanoid")
@@ -34,10 +35,11 @@ function fling(VeryCoolVariableName)
 	Velocity.Attachment1=HumanoidRootPart:WaitForChild("RootAttachment")
 	Velocity.MaxForce=1/0
 	Velocity.Parent=workspace
-	Velocity.Name="lwk id smash kaylie"
+	Velocity.Name="lwk id smash kaylie - tatsuki"
 	local InitCFrame=HumanoidRootPart.CFrame
 	local time=0
 	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/1.6)
+	flinging=true
 	repeat
 		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,5,0))
 		Velocity.VectorVelocity=Vector3.new(0,-1000000,0)
@@ -45,10 +47,11 @@ function fling(VeryCoolVariableName)
 	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
 	Velocity:Destroy()
 	for i=1,100 do game:GetService("RunService").RenderStepped:Wait()HumanoidRootPart.CFrame=InitCFrame HumanoidRootPart.Velocity=Vector3.zero HumanoidRootPart.RotVelocity=Vector3.zero iusuallydontneedavariableforthisbutitsok.PlatformStand=false end
+	flinging=false
 end
 local looplist={}
 HB:Connect(function(deltaTime)
-    Character:PivotTo(CFrame.new(0,-65536,0))
+    if not flinging then Character:PivotTo(CFrame.new(0,-65536,0)) end
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
