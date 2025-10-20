@@ -2,7 +2,7 @@
 
 local funclib=loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/stuff/main/funclib.lua"))()
 local Players=game:GetService("Players")
-local Owner=Players:FindFirstChild("Jacobthecool292")
+local Owner=Players:FindFirstChild("Jacobthecool292")or Players:FindFirstChild("Kandale_Dingul")
 local TextChatService=game:GetService("TextChatService")
 local RunService=game:GetService("RunService")
 local HB=RunService.Heartbeat
