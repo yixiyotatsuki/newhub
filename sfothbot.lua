@@ -20,6 +20,32 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
     if object==nil and Player.Character~=nil then object=game:GetService("Players").LocalPlayer.Character:WaitForChild("Sword",.01) end
     return object
 end
+function fling(VeryCoolVariableName)
+	local layer_iaccidentallymispelledplayerbutidontcare=VeryCoolVariableName
+	local hrp,iusuallydontneedavariableforthisbutitsok=layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("HumanoidRootPart"),layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("Humanoid")
+	if not hrp or not iusuallydontneedavariableforthisbutitsok then return end
+	local function cframe_but_its_not_cframe(PositionOfCourse:Vector3)
+		Character:TranslateBy(PositionOfCourse-HumanoidRootPart.Position)
+	end
+	-- from now good variable names.. i think
+
+	local Velocity=Instance.new("LinearVelocity")
+	Velocity.Attachment0=HumanoidRootPart:WaitForChild("RootAttachment")
+	Velocity.Attachment1=HumanoidRootPart:WaitForChild("RootAttachment")
+	Velocity.MaxForce=1/0
+	Velocity.Parent=workspace
+	Velocity.Name="lwk id smash kaylie"
+	local InitCFrame=HumanoidRootPart.CFrame
+	local time=0
+	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/1.6)
+	repeat
+		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,5,0))
+		Velocity.VectorVelocity=Vector3.new(0,-1000000,0)
+		time+=task.wait()
+	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
+	Velocity:Destroy()
+	for i=1,100 do game:GetService("RunService").RenderStepped:Wait()HumanoidRootPart.CFrame=InitCFrame HumanoidRootPart.Velocity=Vector3.zero HumanoidRootPart.RotVelocity=Vector3.zero iusuallydontneedavariableforthisbutitsok.PlatformStand=false end
+end
 local looplist={}
 HB:Connect(function(deltaTime)
     Character:PivotTo(CFrame.new(0,-65536,0))
@@ -60,6 +86,9 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                     local index=0
                     for i,v in ipairs(looplist) do if v.Name==args[1] then index=i break end end
                     table.remove(looplist,index)
+                elseif cmd=="fling" then
+                    local v=funclib:GetPlayer(args[1],false)
+                    fling(v.Character)
                 end
             end
         end
