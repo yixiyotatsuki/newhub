@@ -22,14 +22,14 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
     if object==nil and Player.Character~=nil then object=game:GetService("Players").LocalPlayer.Character:WaitForChild("Sword",.01) end
     return object
 end
+	function cframe_but_its_not_cframe(PositionOfCourse:Vector3)
+		Character:TranslateBy(PositionOfCourse-HumanoidRootPart.Position)
+	end
 local flinging=false
 function fling(VeryCoolVariableName)
 	local layer_iaccidentallymispelledplayerbutidontcare=VeryCoolVariableName
 	local hrp,iusuallydontneedavariableforthisbutitsok=layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("HumanoidRootPart"),layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("Humanoid")
 	if not hrp or not iusuallydontneedavariableforthisbutitsok then return end
-	local function cframe_but_its_not_cframe(PositionOfCourse:Vector3)
-		Character:TranslateBy(PositionOfCourse-HumanoidRootPart.Position)
-	end
 	-- from now good variable names.. i think
 	local InitCFrame=HumanoidRootPart.CFrame
 	local time=0
@@ -45,7 +45,7 @@ function fling(VeryCoolVariableName)
 end
 local looplist={}
 HB:Connect(function(deltaTime)
-    if not flinging then Character:PivotTo(CFrame.new(0,-65536,0)) end
+    if not flinging then cframe_but_its_not_cframe(Vector3.new(0,-10000,0)) end
     HumanoidRootPart.Velocity=Vector3.zero
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
@@ -94,5 +94,5 @@ end
 --[[
 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/newhub/main/sfothbot.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/newhub/heads/main/sfothbot.lua"))()
 ]]
