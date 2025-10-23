@@ -38,7 +38,7 @@ function fling(VeryCoolVariableName)
 		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
 		hrp.Velocity=Vector3.new(0,-10000)
 		time+=task.wait()
-	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
+	until hrp.Magnitude>500 or time>5
 	flinging=false
 end
 local looplist={}
