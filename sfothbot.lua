@@ -2,7 +2,7 @@
 
 local funclib=loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/stuff/main/funclib.lua"))()
 local Players=game:GetService("Players")
-local Owner=Players:FindFirstChild("Jacobthecool292")or Players:FindFirstChild("Kandale_Dingul")
+local Owner=Players:FindFirstChild("Kandale_Dingul")
 local TextChatService=game:GetService("TextChatService")
 local RunService=game:GetService("RunService")
 local HB=RunService.Heartbeat
@@ -14,6 +14,7 @@ Player.CharacterAdded:Connect(function(character)
     Character=character
     HumanoidRootPart=Character:WaitForChild("HumanoidRootPart",9e9)
 end)
+if Owner=nil then return print("GANG OWNER DOESNT  EXIST ARE YOU FUCKING RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD") end
 local funcs={}
 function funcs:GetSword() -- this is quite literally just a function from funclib but i replaced it with waitforchild
     local object=Player:WaitForChild("Backpack"):WaitForChild("Sword",.01)
@@ -56,7 +57,7 @@ HB:Connect(function(deltaTime)
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
     sword.Handle.Massless=true
-    Character:WaitForChild("Humanoid"):EquipTool(sword)
+    if flinging then sword.Parent=Player.Backpack else Character:WaitForChild("Humanoid"):EquipTool(sword) end
     sword:Activate()
     for i,v in pairs(looplist) do
         if not v.Character then continue end 
