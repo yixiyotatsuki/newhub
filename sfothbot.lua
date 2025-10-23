@@ -14,6 +14,7 @@ Player.CharacterAdded:Connect(function(character)
     Character=character
     HumanoidRootPart=Character:WaitForChild("HumanoidRootPart",9e9)
 end)
+workspace.FallenPartsDestroyHeight=0/0
 if Owner==nil then return print("GANG OWNER DOESNT  EXIST ARE YOU FUCKING RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD") end
 local funcs={}
 function funcs:GetSword() -- this is quite literally just a function from funclib but i replaced it with waitforchild
@@ -26,19 +27,21 @@ function fling(VeryCoolVariableName)
 	local layer_iaccidentallymispelledplayerbutidontcare=VeryCoolVariableName
 	local hrp,iusuallydontneedavariableforthisbutitsok=layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("HumanoidRootPart"),layer_iaccidentallymispelledplayerbutidontcare:FindFirstChild("Humanoid")
 	if not hrp or not iusuallydontneedavariableforthisbutitsok then return end
+    --[[
 	local function cframe_but_its_not_cframe(PositionOfCourse:Vector3)
 		Character:TranslateBy(PositionOfCourse-HumanoidRootPart.Position)
-	end
+	end]]
 	-- from now good variable names.. i think
 	local InitCFrame=HumanoidRootPart.CFrame
 	local time=0
-	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/1.6)
+	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/(1.6/funclib:GetPing()))
 	flinging=true
 	repeat
-		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
-		hrp.Velocity=Vector3.new(0,-10000)
+		--cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
+        Character:PivotTo(CFrame.new(hrp.Position+RetardPrediction+Vector3.new(0,5,0),HumanoidRootPart.Position-Vector3.new(0,5,0)))
+		HumanoidRootPart.Velocity=Vector3.new(0,-10000,0)
 		time+=task.wait()
-	until hrp.Magnitude>500 or not hrp:IsDescendantOf(game) or time>5
+	until not hrp:IsDescendantOf(game) or time>5
 	flinging=false
 end
 local looplist={}
@@ -49,7 +52,6 @@ HB:Connect(function(deltaTime)
     sword.Handle.Size=Vector3.new(20,20,20)
     sword.Handle.Massless=true
     if flinging then sword.Parent=Player.Backpack else Character:WaitForChild("Humanoid"):EquipTool(sword) end
-    sword:Activate()
     for i,v in pairs(looplist) do
         if not v.Character then continue end 
         if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
