@@ -43,7 +43,7 @@ function fling(VeryCoolVariableName)
 	until not hrp:IsDescendantOf(game) or time>5
 	flinging=false
 end
-local looplist={}
+local looplist={"Guys_imtulimullinew"}--(ChancedGRIM, reason: annoying),
 HB:Connect(function(deltaTime)
     if not flinging then cframe_but_its_not_cframe(Vector3.new(0,-10000,0)) end
     HumanoidRootPart.Velocity=Vector3.zero
@@ -52,9 +52,10 @@ HB:Connect(function(deltaTime)
     sword.Handle.Massless=true
     if flinging then sword.Parent=Player.Backpack else Character:WaitForChild("Humanoid"):EquipTool(sword) end
     for i,v in pairs(looplist) do
-        if not v.Character then continue end 
-        if v.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
-        v.Character:PivotTo(CFrame.new(sword.Handle.Position,v.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
+        local player=Players:FindFirstChild(v)
+        if not player and player.Character then continue end 
+        if player.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
+        player.Character:PivotTo(CFrame.new(sword.Handle.Position,v.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
     end
 end)
 
@@ -77,7 +78,7 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                         end
                     end)
                 elseif cmd=="loop" then
-                    table.insert(looplist,Players:FindFirstChild(args[1]))
+                    table.insert(looplist,args[1])
                 elseif cmd=="unloop" then
                     local index=0
                     for i,v in ipairs(looplist) do if v.Name==args[1] then index=i break end end
