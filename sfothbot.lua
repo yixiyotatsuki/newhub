@@ -42,8 +42,8 @@ function fling(VeryCoolVariableName)
 	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/1.6)
 	flinging=true
 	repeat
-		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,5,0))
-		Velocity.VectorVelocity=Vector3.new(0,-1000000,0)
+		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
+		Velocity.VectorVelocity=Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*100
 		time+=task.wait()
 	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
 	Velocity:Destroy()
