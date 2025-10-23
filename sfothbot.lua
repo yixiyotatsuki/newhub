@@ -30,20 +30,13 @@ function fling(VeryCoolVariableName)
 		Character:TranslateBy(PositionOfCourse-HumanoidRootPart.Position)
 	end
 	-- from now good variable names.. i think
-
-	local Velocity=Instance.new("LinearVelocity")
-	Velocity.Attachment0=HumanoidRootPart:WaitForChild("RootAttachment")
-	Velocity.Attachment1=HumanoidRootPart:WaitForChild("RootAttachment")
-	Velocity.MaxForce=1/0
-	Velocity.Parent=workspace
-	Velocity.Name="lwk id smash kaylie - tatsuki"
 	local InitCFrame=HumanoidRootPart.CFrame
 	local time=0
 	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude/1.6)
 	flinging=true
 	repeat
 		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
-		Velocity.VectorVelocity=Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*100
+		hrp.Velocity=Vector3.new(0,-10000)
 		time+=task.wait()
 	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
 	Velocity:Destroy()
