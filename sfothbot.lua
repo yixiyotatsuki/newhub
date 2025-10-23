@@ -53,9 +53,9 @@ HB:Connect(function(deltaTime)
     if flinging then sword.Parent=Player.Backpack else Character:WaitForChild("Humanoid"):EquipTool(sword) end
     for i,v in pairs(looplist) do
         local player=Players:FindFirstChild(v)
-        if not player and player.Character then continue end 
-        if player.Character:WaitForChild("Sword",deltaTime) then v.Character:WaitForChild("Sword",deltaTime):Destroy() end
-        player.Character:PivotTo(CFrame.new(sword.Handle.Position,v.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
+        if not player or player.Character then continue end 
+        if player.Character:WaitForChild("Sword",deltaTime) then player.Character:WaitForChild("Sword",deltaTime):Destroy() end
+        player.Character:PivotTo(CFrame.new(sword.Handle.Position,player.Character:GetPivot().Position+(Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))*5)))
     end
 end)
 
