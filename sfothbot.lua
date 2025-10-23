@@ -39,8 +39,6 @@ function fling(VeryCoolVariableName)
 		hrp.Velocity=Vector3.new(0,-10000)
 		time+=task.wait()
 	until (math.abs(hrp.Velocity.Y)>1000 or Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude>1500) or time>5
-	Velocity:Destroy()
-	for i=1,100 do game:GetService("RunService").RenderStepped:Wait()HumanoidRootPart.CFrame=InitCFrame HumanoidRootPart.Velocity=Vector3.zero HumanoidRootPart.RotVelocity=Vector3.zero iusuallydontneedavariableforthisbutitsok.PlatformStand=false end
 	flinging=false
 end
 local looplist={}
