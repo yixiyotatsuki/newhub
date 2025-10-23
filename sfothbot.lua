@@ -14,7 +14,7 @@ Player.CharacterAdded:Connect(function(character)
     Character=character
     HumanoidRootPart=Character:WaitForChild("HumanoidRootPart",9e9)
 end)
-if Owner=nil then return print("GANG OWNER DOESNT  EXIST ARE YOU FUCKING RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD") end
+if Owner==nil then return print("GANG OWNER DOESNT  EXIST ARE YOU FUCKING RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD RETARD") end
 local funcs={}
 function funcs:GetSword() -- this is quite literally just a function from funclib but i replaced it with waitforchild
     local object=Player:WaitForChild("Backpack"):WaitForChild("Sword",.01)
@@ -98,3 +98,9 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
         end
     end
 end
+
+--[[
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/newhub/main/sfothbot.lua"))()
+]]
