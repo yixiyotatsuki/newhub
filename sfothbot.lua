@@ -43,7 +43,7 @@ function fling(VeryCoolVariableName)
 	until not hrp:IsDescendantOf(game) or time>5
 	flinging=false
 end
-local looplist={"Guys_imtulimullinew","D_eadkreek"}--(ChancedGRIM, reason: annoying), (also chancedgrim)
+local looplist={"Guys_imtulimullinew","D_eadkreek","Yuri_Watanabe"}--(ChancedGRIM, reason: annoying), (also chancedgrim), also chancedgrim
 HB:Connect(function(deltaTime)
     if not flinging then cframe_but_its_not_cframe(Vector3.new(0,-10000,0)) end
     if not flinging then HumanoidRootPart.Velocity=Vector3.zero end
