@@ -86,6 +86,9 @@ TextChatService.OnIncomingMessage=function(msg:TextChatMessage)
                 elseif cmd=="fling" then
                     local v=funclib:GetPlayer(args[1],false)
                     fling(v.Character)
+				elseif cmd=="fakeflinging" then
+					if args[1]~=("true" or "false") then return end
+					flinging=args[1]==("true" or "false") and (true or false)
                 end
             end
         end
