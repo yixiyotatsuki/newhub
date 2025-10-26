@@ -33,10 +33,10 @@ function fling(VeryCoolVariableName)
 	-- from now good variable names.. i think
 	local InitCFrame=HumanoidRootPart.CFrame
 	local time=0
-	local RetardPrediction=iusuallydontneedavariableforthisbutitsok.MoveDirection*(hrp.Velocity.Magnitude/1.25)
+	local RetardPrediction=hrp.Velocity/(1.5+funclib:GetPing())
 	flinging=true
 	repeat
-		cframe_but_its_not_cframe(hrp.Position+RetardPrediction+Vector3.new(0,0,0))
+		cframe_but_its_not_cframe(hrp.Position+RetardPrediction)
 		HumanoidRootPart.Velocity=Vector3.new(0,-100000,0)
         HumanoidRootPart.RotVelocity=Vector3.new(0,1000,0)
 		time+=task.wait()
