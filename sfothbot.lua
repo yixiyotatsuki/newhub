@@ -35,7 +35,7 @@ function fling(VeryCoolVariableName)
 	local time=0
 	flinging=true
 	repeat
-		local RetardPrediction=hrp.Velocity/(1.5+funclib:GetPing())
+		local RetardPrediction=hrp.Velocity/(1.25+funclib:GetPing())
 		cframe_but_its_not_cframe(hrp.Position+RetardPrediction)
 		HumanoidRootPart.Velocity=Vector3.new(0,-100000,0)
         HumanoidRootPart.RotVelocity=Vector3.new(0,1000,0)
