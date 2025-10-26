@@ -46,7 +46,7 @@ end
 local looplist={"Guys_imtulimullinew","D_eadkreek"}--(ChancedGRIM, reason: annoying), (also chancedgrim)
 HB:Connect(function(deltaTime)
     if not flinging then cframe_but_its_not_cframe(Vector3.new(0,-10000,0)) end
-    HumanoidRootPart.Velocity=Vector3.zero
+    if not flinging then HumanoidRootPart.Velocity=Vector3.zero end
     local sword=funcs:GetSword()
     sword.Handle.Size=Vector3.new(20,20,20)
     sword.Handle.Massless=true
