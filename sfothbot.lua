@@ -88,7 +88,7 @@ end
 
 function funcs:Hit(part,number)
     local sword=funcs:GetSword()
-    if sword then
+    if sword:IsDescendantOf(Character) then
         if sword:IsDescendantOf(Character) then
             firetouchinterest(sword,part,number)
         elseif sword.Parent==Player:WaitForChild("Backpack") then
@@ -99,7 +99,7 @@ function funcs:Hit(part,number)
 end
 
 
-RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE OF IDENTITY LEVELS AHAHAHAHAHAHAHA
+RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE OF IDENTITY LEVELS AHAHAHAHAHAHAHA identity level is 8
     if settings.fling==nil then
         funcs:SetPosition(Vector3.new(0,-100000,0))
         for i,v in pairs(settings.killing) do
@@ -146,6 +146,7 @@ print("hb loop loaded")
 
 TextChatService.MessageReceived:Connect(function(msg)
     if not msg.TextSource then return end
+    if not msg.TextSource.UserId then return end
     if table.find(whitelist,Players:GetNameFromUserIdAsync(msg.TextSource.UserId)) then
         if msg.Text:sub(1,3)=="r34." then
             local args=msg.Text:sub(4):split(" ")
