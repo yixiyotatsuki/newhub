@@ -148,7 +148,9 @@ TextChatService.MessageReceived:Connect(function(msg)
     if not msg.TextSource then return end
     if not msg.TextSource.UserId then return end
     if table.find(whitelist,Players:GetNameFromUserIdAsync(msg.TextSource.UserId)) then
+        print("HELLO")
         if msg.Text:sub(1,3)=="r34." then
+            print("HII")
             local args=msg.Text:sub(5):split(" ")
             local cmd=args[1]
             table.remove(args,1)
