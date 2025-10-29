@@ -145,6 +145,7 @@ print("hb loop loaded")
 -- finaly commands!!!
 
 TextChatService.MessageReceived:Connect(function(msg)
+    if not msg.TextSource then return end
     if table.find(whitelist,Players:GetNameFromUserIdAsync(msg.TextSource.UserId)) then
         if msg.Text:sub(1,3)=="r34." then
             local args=msg.Text:sub(4):split(" ")
