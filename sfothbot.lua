@@ -154,7 +154,7 @@ TextChatService.MessageReceived:Connect(function(msg)
             local args=msg.Text:sub(5):split(" ")
             local cmd=args[1]
             table.remove(args,1)
-
+            print(unpack(args))
             if cmd=="fling" then
                 local player=funclib:GetPlayer(args[1])
                 if player then
