@@ -153,6 +153,7 @@ TextChatService.MessageReceived:Connect(function(msg)
             print("HII")
             local args=msg.Text:sub(5):split(" ")
             local cmd=args[1]
+            print(cmd)
             table.remove(args,1)
             print(unpack(args))
             if cmd=="fling" then
