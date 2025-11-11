@@ -105,7 +105,7 @@ RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE O
         for i,v in pairs(settings.killing) do
             for i,v in pairs(v.Character:GetChildren()) do
                 if v:IsA("BasePart") then
-                    funcs:Hit(v,0)
+                    funcs:Hit(v,1)
                 end
             end
             if v.Character:WaitForChild("Humanoid").Health==0 then table.remove(settings.killing,i) end
@@ -149,13 +149,12 @@ TextChatService.MessageReceived:Connect(function(msg)
     if not msg.TextSource.UserId then return end
     if table.find(whitelist,Players:GetNameFromUserIdAsync(msg.TextSource.UserId)) then
         print("HELLO")
-        if msg.Text:sub(1,4)=="r34." then
+        if msg.Text:sub(1,5)=="r34." then
             print("HII")
-            local args=msg.Text:sub(5,#msg.Text):split(" ")
+            local args=msg.Text:sub(5):split(" ")
             local cmd=args[1]
-            print(cmd)
             table.remove(args,1)
-            print(unpack(args))
+
             if cmd=="fling" then
                 local player=funclib:GetPlayer(args[1])
                 if player then
