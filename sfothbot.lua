@@ -24,7 +24,7 @@ local whitelist={ -- for anticheat
     "STEVETheReal916", -- i get hard whenever this guy is here
     "HallowGol", -- this guy is gay
     "ColonThreeSpam", -- this guy is only 3 months old + Stella alt
-    "asdwasdyes_imcool", -- man
+    "asdwasdyes_imcool",
     Player.Name
 }
 local proloop={} -- loop people ion like
