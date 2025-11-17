@@ -135,17 +135,6 @@ RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE O
             if not player then continue end
             funcs:Hit(player.Character.PrimaryPart,0)
         end
-        for i,v in pairs(Players:GetPlayers()) do
-            if table.find(whitelist,v.Name) then
-                if settings.fun.instakill_sword then
-                    for i,v in pairs(settings.hitlogs) do
-                        if table.find(settings.temp_whitelist,v.creator) then
-                            table.insert(settings.killing,Players:WaitForChild(v.victim.Name))
-                        end
-                    end
-                end
-            end
-        end
         Humanoid.RootPart.Velocity=Vector3.zero
     elseif settings.fling~=nil then
         local hum=settings.fling.Character:WaitForChild("Humanoid")
