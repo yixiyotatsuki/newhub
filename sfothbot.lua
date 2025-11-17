@@ -33,10 +33,7 @@ local settings={ -- temporary shit
     killing={},
     temp_whitelist={},
     temp_loop={},
-    hitlogs={}, -- i will lag the shit from this one function
-    fun={
-        instakill_sword=false
-    }
+    killlogs={}, -- i will lag the shit from this one function
 }
 function funcs.anticheat(tag:ObjectValue) -- this is for the kill logs, i made it a . function so it wont autocorrect because this isnt that important
     local victim,creator=tag.Parent.Parent,Players:WaitForChild(tag.Value.Name,5)
@@ -61,8 +58,8 @@ task.spawn(function() -- this is the kill logs shit the anticheat is in the fixe
         if not players[player.Name] then
             players[player.Name]=player.CharacterAdded:Connect(function(char)
                 char:WaitForChild("Humanoid").ChildAdded:Connect(function(child)
-                    if string.match(child.Name,"creator") then -- i dont know the tags actual name im pretty sure its just creator but i could be wrong idfk
-                        funcs.anticheat(child)
+                    if string.match(child.Name,"creator") and char:WaitForChild("Humanoid").Health==0 then -- i dont know the tags actual name im pretty sure its just creator but i could be wrong idfk
+                        funcs.anticheat(ki)
                     end
                 end)
             end)
@@ -81,6 +78,27 @@ function funcs:GetSword() -- this is quite literally just a function from funcli
     local object=Player:WaitForChild("Backpack"):WaitForChild("Sword",.01)
     if object==nil and Player.Character~=nil then object=game:GetService("Players").LocalPlayer.Character:WaitForChild("Sword",.01) end
     return object
+end
+
+local function god() -- WOW
+    local Players=game:GetService("Players")
+    local Player=Players.LocalPlayer
+    local Humanoid=Player.Character:WaitForChild("Humanoid")
+    Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead,false)
+    replicatesignal(Player.Kill)
+
+    game:GetService("RunService").Heartbeat:Connect(function()
+        for i,v in pairs(Players:GetPlayers()) do
+            if v==Player then continue end
+            local char=v.Character
+            if not char then continue end
+            local tool=char:FindFirstChildOfClass("Tool")
+            if tool and tool:FindFirstChild("Handle") then
+                firetouchinterest(Humanoid.RootPart,tool:WaitForChild("Handle"),0)
+                firetouchinterest(Humanoid.RootPart,tool:WaitForChild("Handle"),1)
+            end
+        end
+    end)
 end
 
 function funcs:SetPosition(pos:Vector3) -- it doesnt set rotation
@@ -106,6 +124,7 @@ RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE O
         for i,v in pairs(settings.killing) do
             for i,v in pairs(v.Character:GetChildren()) do
                 if v:IsA("BasePart") then
+                    funcs:Hit(v,0)
                     funcs:Hit(v,1)
                 end
             end
@@ -142,16 +161,17 @@ RunService.Heartbeat:Connect(function(dt) -- fixedheartbeat DIDNT WORK BECAUSE O
         end
     end
 end)
-print("hb loop loaded")
+print("[SPYWARE]: 'heartbeat core loaded'")
 -- finaly commands!!!
 
 TextChatService.MessageReceived:Connect(function(msg)
     if not msg.TextSource then return end
     if not msg.TextSource.UserId then return end
-    if table.find(whitelist,Players:GetNameFromUserIdAsync(msg.TextSource.UserId)) then
-        print("HELLO")
-        if msg.Text:sub(1,4)=="r34." then
-            print("HII")
+    local name=Players:GetNameFromUserIdAsync(msg.TextSource.UserId)
+    if table.find(whitelist,name) then
+        print("[SPYWARE]: 'detected whitelisted user: "..name.."'")
+        if msg.Text:sub(1,4)=="spy." then
+            print("[SPYWARE]: 'prefix detected'")
             local args=msg.Text:sub(5):split(" ")
             local cmd=args[1]
             table.remove(args,1)
@@ -179,14 +199,13 @@ TextChatService.MessageReceived:Connect(function(msg)
             elseif cmd=="update" then
                 queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/yixiyotatsuki/newhub/heads/main/sfothbot.lua"))())
                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,game.JobId,Player)
-            elseif cmd=="fake_darkheart" then
-                local player=funclib:GetPlayer(args[1])
-                settings.fun.instakill_sword=not settings.fun.instakill_sword
             elseif cmd=="whitelist" then
                 local player=funclib:GetPlayer(args[1])
                 if player then
-                    table.insert(settings.temp_whitelist,player.Name) 
+                    table.insert(settings.temp_whitelist,player.Name)
                 end
+            elseif cmd=="god" then
+                god()
             end
         end
     end
