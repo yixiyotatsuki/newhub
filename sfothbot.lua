@@ -72,7 +72,7 @@ task.spawn(function() -- this is the kill logs shit the anticheat is in the fixe
         check(player)
     end)
 end)
-print("hitlog loaded")
+print("[SPYWARE]: 'kill log loaded'")
 
 function funcs:GetSword() -- this is quite literally just a function from funclib but i replaced it with waitforchild
     local object=Player:WaitForChild("Backpack"):WaitForChild("Sword",.01)
